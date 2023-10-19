@@ -1,0 +1,89 @@
+create table ariafy55
+(ano number (3) primary key, 
+aname varchar2(15), 
+atype varchar2(15)
+);
+
+insest all
+into ariafy55 values(1,'Baramati','Rural') 
+into ariafy55 values(2,'Indapur','Rural') 
+into ariafy55 values(3,'Pune','Urban')
+into ariafy55 values(4,'Mumbai','Urban') 
+into ariafy55 values(5, 'shirur','Rural') 
+into ariafy55 values(6, 'chennai','Urban')
+Into ariafy55 values(7 'Nagar','Urban') 
+into ariafy55 values(8, 'Daund','Rural') 
+select from dual; 
+select * from ariafy55;
+
+create table personfy55
+(pno number(3)primary key, 
+pname varchar2(15), 
+bdate date,
+income number(7), 
+ano number(3)references ariafy55(ano) 
+ON DELETE CASCADE 
+);
+
+insert all
+into personfy55 values(101,'Vishal','12-Jun-1983',25000,1) 
+into personfy55 values(102,'shekhar','12-Jun-1986',35000,1) 
+into personfy55 values(103,'Suraj','11-Feb-1999',125000,1)
+into personfy55 values(104,'Vyankatesh','17-Mar-1986',85000,3)
+Into personfy55 values(105,'Gorakh','25-Des-1989',65000,3)
+Into personfy55 values(106,'sarfaraj','10-june-1985',35000,2)
+Into personfy55
+values(107,'Rahul','11-may-1986',35000,5)
+Into personfy55 values(108,'Ajay','11-may-1986',45000,6)
+Into personfy55 values(109,'Dipak','11-jan-1986',35000,7)
+Into personfy55 values(110,'Nilesh','11-may-1986',65000, 8)
+select * from dual;
+from * from personfy55;
+
+
+
+1) select personfy55.pname from person, ariafy55 where personfy55.ano=ariafy55.ano and ariafy55.atype='Rural';
+
+2) select max(pname),lenght(pname) from personfy55 where pname like 'V%';
+
+3) select pname from personfy55 where to_char(bdate,'mon')='jun';
+
+select pname from personfy55 where to_char(bdate,'yyyy')=1983;
+
+select pname from personfy55 where to_char(bdate,'mon')='12;
+
+
+4) select count(pname) as Born_On_same_Day from personfy55 where to_char(bdate,'dd')=12;
+
+5) select count(pname) as Below_income from personfy55 where income<30000;
+
+6) select pname from personfy55 where income between 35000 and 55000;
+
+7) select avg(distinct income),pname from personfy55 group by pname;
+
+8) select sum(personfy55.income) from personfy55,ariafy55 where personfy55.ano=ariafy55.ano and ariafy55.aname='Pune';
+
+
+9)select max(personfy55.income),ariafy55.aname from personfy55,ariafy55 where personfy55.ano=ariafy55.ano group by ariafy55.aname having ariafy55.aname='Pune';
+
+10) select count(personfy55.pname) as Area_Wise_Count,ariafy55.aname from personfy55,ariafy55 where personfy55.ano=ariafy55.ano group by ariafy55.aname;
+
+11) select ariafy55.aname,personfy55.pname,personfy55. income,ariafy55.atype from personfy55,ariafy55 where personfy55.ano=ariafy55.ano and personfy55.income=
+(select max(personfy55.income) from personfy55,ariafy55 where personfy55.ano=ariafy55.ano and ariafy55.atype!= 'Urban');
+
+
+12) select * from ariafy55, personfy55 where ariafy55.ano=personfy55.ano order by personfy55.pno;
+
+
+13) select personfy55.pname,ariafy55.aname from ariafy55,personfy55 where ariafy55.ano=personfy55.ano order by ariafy55.aname,personfy55.pname;
+
+
+14) select min(personfy5r.income) from ariafy55,personfy55 where ariafy55.ano=personfy55.ano;
+
+
+15) update ariafy55 set aname='Mumbai' where anme='Pune';
+Select * from ariafy55 where aname='Mumbai';
+
+
+
+16) delete from ariafy55 where atype='Urban';
