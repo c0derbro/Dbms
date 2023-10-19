@@ -1,0 +1,61 @@
+create table billfy55
+(bno number(3)primary key,
+day date,
+tno number(3),
+total number(7)check(total>0)
+);
+
+
+insert into billfy55 values(301,'08-jan-2013',1, 750);
+insert into billfy55 values(302,'08-jan-2013',2, 1205);
+insert into billfy55 values(303,'01-dec-2013',3, 950);
+insert into billfy55 values(304,'01-dec-2013',4, 505);
+insert into billfy55 values(305,'01-dec-2013',4, 405);
+select * from billfy55;
+
+
+create table menufy55
+(dno number(3) primary key,
+dish varchar(25),
+price number(3)check(price>0)
+);
+
+
+insert into menufy55 values(1,'Spaghetti Carbonara',199);
+insert into menufy55 values(2,'manga Alfredo',145);
+insert into menufy55 values(3,'Margherita Pizza',175);
+insert into menufy55 values(4,'Caesar Salad',299);
+insert into menufy55 values(5,'biryani',299);
+select * from menufy55;
+
+
+
+create table bmfy55
+(bno number(3)references billfy55(bno) on delete cascade,
+dno number(3)references menufy55(dno)on delete cascade,
+quantity number(3)
+);
+
+insert into bmfy55 values(301,1,2);
+insert into bmfy55 values(301,3,1);
+insert into bmfy55 values(302,2,3);
+insert into bmfy55 values(303,4,2);
+insert into bmfy55 values(304,1,1);
+insert into bmfy54 values(305,2,2);
+select * from bmfy55;
+
+
+
+billfy55.bno,menufy55.dish,menufy55.price,bmfy55.quantity,billfy55.total from bmfy55,billfy55,menufy55 where bmfy55.bno=billfy55.bno and bmfy55.dno=menufy55.dno;
+
+
+select sum(billfy55.total)as total_amount_collected from billfy55 where billfy55.day='08-jan-2013';
+
+
+select bno,count(*) as Menu_count from bmfy55 where bno=301 group by bno;
+
+
+select dno,dish,price from menufy55 where price between 100 and 500;
+
+
+select tno,count(*) as Bill_Count from billfy55 where day='01-dec-2013' group by tno;
