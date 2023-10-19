@@ -1,0 +1,45 @@
+create table owner1(
+oname varchar2(20) primary key,
+addr varchar2(10),
+phone int
+);
+insert into owner1 values('Mukesh Ambani','Gujarat',123496867);
+insert into owner1 values('Dilip Shanghvi','Gujarat',123496862);
+insert into owner1 values('Lakshmi Mittal','Parsi',123496863);
+insert into owner1 values('Azim Premji','mumbai',123496865);
+insert into owner1 values('Shiv Nadar','mumbai',123496866);
+insert into owner1 values('S P Hinduja','mumbai',123496868);
+insert into owner1 values('patil','mumbai',123496868);
+select *from owner1;
+
+
+
+
+
+create table property1(
+oname varchar2(20) references owner1(oname),
+pno int primary key,
+desc1 varchar2(10),
+area varchar2(10),
+rate int
+);
+
+insert into  property1 values('Mukesh Ambani',111,'1 plot','deccan',1000);
+insert into  property1 values('Dilip Shanghvi',222,'2 plot','baramati',20000);
+insert into  property1 values('Lakshmi Mittal',333,'3 plot','faltan',3000);
+insert into  property1 values('Azim Premji',444,'plot','chinchwad',40000);
+insert into  property1 values('S P Hinduja',555,'banglow','chinchwad',6000);
+insert into  property1 values('patil',666,'banglow','pune',6000);
+insert into  property1 values('patil',888,'plot','pune',9000);
+select *from property1;
+
+
+
+select oname,min(rate) from property1 group by oname having oname='patil';
+
+
+
+select oname from property1 where area =
+
+(select max(rate) from  property1  group by area having area='chinchwad');
+
